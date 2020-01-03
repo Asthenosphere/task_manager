@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
-import bg from './polygon.jpeg'
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -51,6 +50,7 @@ class Tasks extends React.Component {
 
     return (
       <>
+        <p>Status: {this.props.loggedInStatus}</p>
         <section className="jumbotron jumbotron-fluid text-center">
           <div className="container py-5">
             <h1 className="display-4">All Tasks</h1>
