@@ -18,6 +18,10 @@ export default class Registration extends React.Component {
 
   handleSubmit(event) {
     const { username, email, password, password_confirmation } = this.state;
+    if (password !== password_confirmation) {
+      window.alert("Your password and password confirmation do not match.");
+      return;
+    }
     axios.post("http://localhost:3000/registrations", {
       user: {
         username: username,
@@ -33,7 +37,8 @@ export default class Registration extends React.Component {
         }
       })
       .catch(error => {
-        console.log("registration error", error)
+        console.log("registration error", error);
+        window.alert("Either your Username or Email has been taken.");
       });
     event.preventDefault();
   }
@@ -45,7 +50,7 @@ export default class Registration extends React.Component {
     })
   }
 
-  render() {
+  renderForm = () => {
     return (
       <div>
         <h5 className="center">New to To-do List?</h5><br/>
@@ -57,7 +62,7 @@ export default class Registration extends React.Component {
           <div className="field">
             <label>Username</label>
             <input
-              type="email"
+              type="text"
               name="username"
               placeholder="Enter Username"
               value={this.state.username}
@@ -103,6 +108,14 @@ export default class Registration extends React.Component {
           </div>
         </form>
       </div>
+    )
+  };
+
+  render() {
+    return (
+      <>
+        {this.renderForm()}
+      </>
     )
   }
 }

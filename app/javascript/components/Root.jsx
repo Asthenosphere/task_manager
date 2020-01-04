@@ -38,9 +38,9 @@ export default class Root extends React.Component {
           <hr className="center" />
           {this.props.loggedInStatus === "LOGGED_IN" ?
             <div>
-              <div className="container">
+              <div className="container"><br/>
                 <div className="center ui teal message">Welcome, {this.props.username}</div>
-              </div><br/>
+              </div><br/><br/>
               <div className="center">
                 <Link
                   to="/tasks"
