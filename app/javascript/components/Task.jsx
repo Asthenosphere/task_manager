@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
+import city from "./city.jpeg";
 
 class Task extends React.Component {
   constructor(props) {
@@ -71,7 +73,19 @@ class Task extends React.Component {
     
     return (
       <div className="">
-        <section className="jumbotron jumbotron-fluid text-center">
+        <div className="ui inverted menu">
+          <Link to="/tasks" className="item">Tasks</Link>
+          <Link to="/new_task" className="item">New Task</Link>
+          <a className="item">Categories</a>
+          <a className="item">New Category</a>
+          <div className="right menu">
+            <Link to="/" className="item">
+              Home
+            </Link>
+          </div>
+        </div>
+        <section className="jumbotron jumbotron-fluid text-center bg-transparent">
+          <img src={city} width={"800"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">{task.title}</h1>
           </div>
@@ -99,7 +113,7 @@ class Task extends React.Component {
               </div>
             </div>
           </div>
-        </div><br/>
+        </div><br/><br/><br/>
         <div className="container">
           <div className="center">
             <button type="button" className="ui basic red button" onClick={this.deleteTask}>Delete Task</button>
@@ -108,7 +122,8 @@ class Task extends React.Component {
             {"  "}
             <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link>
           </div>
-        </div>
+        </div><br/><br/><br/><br/>
+        <Footer />
       </div>
     )
   }

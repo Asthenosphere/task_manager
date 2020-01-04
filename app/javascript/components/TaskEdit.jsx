@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 
 class TaskNew extends React.Component {
@@ -87,14 +88,14 @@ class TaskNew extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.props.history.push(`/task/${response.id}`))
-      .catch(error => console.log(error.message));
+      .catch(error => console.log(error));
   }
 
   render() {
     return (
       <div className="container-sm"><br/>
         <div className="center ui huge header">
-          Edit existing task
+          Update existing task
         </div>
         <form className="ui form" onSubmit={this.onSubmit}>
           <div className="field">
@@ -109,7 +110,8 @@ class TaskNew extends React.Component {
             Update Task
           </button>
           <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link>
-        </form>
+        </form><br/><br/>
+        <Footer />
       </div>
     )
   }

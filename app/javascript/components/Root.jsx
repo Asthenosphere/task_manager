@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import Registration from "./authentication/Registration";
 import Login from "./authentication/Login";
+import Footer from "./Footer";
 
 
 export default class Root extends React.Component {
@@ -28,7 +29,25 @@ export default class Root extends React.Component {
 
   render() {
     return (
-      <div><br/><br/><br/><br/>
+      <div>
+        {this.props.loggedInStatus === "LOGGED_IN" ?
+          <div className="ui inverted menu">
+            <Link to="/tasks" className="item">Tasks</Link>
+            <Link to="/new_task" className="item">
+              New Task
+            </Link>
+            <a className="item">Categories</a>
+            <a className="item">New Category</a>
+            <div className="right menu">
+              <Link to="/" className="active item">
+                Home
+              </Link>
+            </div>
+          </div>
+          :
+          undefined
+        }
+        <br/><br/><br/><br/>
         <div className="jumbotron jumbotron-fluid bg-white">
           <h1 className="center display-4">Welcome to To-do List</h1>
           <p className="center">
@@ -78,7 +97,14 @@ export default class Root extends React.Component {
             </div>
           </div>
         }
-        <br/><br/><br/>
+        <br/><br/><br/><br/>
+        {this.props.loggedInStatus === "LOGGED_IN" ?
+          <div><br/><br/><br/><br/>
+            <Footer/>
+          </div>
+          :
+          <Footer/>
+        }
       </div>
     )
   }

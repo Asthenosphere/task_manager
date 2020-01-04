@@ -18,10 +18,6 @@ export default class Registration extends React.Component {
 
   handleSubmit(event) {
     const { username, email, password, password_confirmation } = this.state;
-    if (password !== password_confirmation) {
-      window.alert("Your password and password confirmation do not match.");
-      return;
-    }
     axios.post("http://localhost:3000/registrations", {
       user: {
         username: username,
@@ -38,7 +34,11 @@ export default class Registration extends React.Component {
       })
       .catch(error => {
         console.log("registration error", error);
-        window.alert("Either your Username or Email has been taken.");
+        if (password !== password_confirmation) {
+          window.alert("Your password and password confirmation do not match.");
+        } else {
+          window.alert("Either your Username or Email has been taken.");
+        }
       });
     event.preventDefault();
   }

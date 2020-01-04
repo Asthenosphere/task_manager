@@ -1,25 +1,27 @@
 class Api::V1::TasksController < ApplicationController
   before_action :require_user
+  before_action :require_same_user, except: [:index, :create]
 
   def index
-    task = Task.all.order(created_at: :desc)
+    task = current_user.tasks.order(created_at: :desc)
     render json: task
   end
 
   def create
-    task = Task.create!(task_params)
-    if task
+    task = Task.new(task_params)
+    task.user = current_user
+    if task.save
       render json: task
     else
-      render json: task.errors
+      render json: task.errors.full_messages
     end
   end
 
   def show
-    if task
+    if task && (task.user == current_user)
       render json: task
     else
-      render json: task.errors
+      redirect_to root_path
     end
   end
 
@@ -37,6 +39,7 @@ class Api::V1::TasksController < ApplicationController
       end
     else
       render json: task.errors
+      redirect_to root_path
     end
   end
 
@@ -55,4 +58,15 @@ class Api::V1::TasksController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def require_same_user
+    if logged_in?
+      if task
+        if task.user != current_user
+          redirect_to root_path
+        end
+      end
+    end
+  end
+
 end

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
+import Footer from "./Footer";
+import city from './city.jpeg'
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -50,7 +52,21 @@ class Tasks extends React.Component {
 
     return (
       <>
-        <section className="jumbotron jumbotron-fluid text-center">
+        <div className="ui inverted menu">
+          <a className="active item">Tasks</a>
+          <Link to="/new_task" className="item">
+            New Task
+          </Link>
+          <a className="item">Categories</a>
+          <a className="item">New Category</a>
+          <div className="right menu">
+            <Link to="/" className="item">
+              Home
+            </Link>
+          </div>
+        </div>
+        <section className="jumbotron jumbotron-fluid text-center bg-transparent">
+          <img src={city} width={"800"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">All Tasks</h1>
             <h4>
@@ -64,15 +80,16 @@ class Tasks extends React.Component {
               <Link to="/new_task" className="ui basic blue button">
                 Create New Task
               </Link>
-            </div><br/>
+            </div><br/><br/>
             <div className="row">
-              {tasks.length > 0 ? allTasks : noTask}
+              {allTasks}
             </div>
             <Link to="/" className="ui basic teal button">
               Home
             </Link>
           </main>
-        </div><br/><br/>
+        </div><br/><br/><br/>
+        <Footer />
       </>
     )
   }
