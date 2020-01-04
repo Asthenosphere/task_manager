@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import Registration from "./authentication/Registration";
+import Login from "./authentication/Login";
+
 
 export default class Root extends React.Component {
   constructor(props) {
     super(props);
     this.handleSuccessfulAuthentication = this.handleSuccessfulAuthentication.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
   }
 
   handleSuccessfulAuthentication(data) {
@@ -13,32 +17,68 @@ export default class Root extends React.Component {
     this.props.history.push("/tasks")
   }
 
+  handleLogoutClick() {
+    axios.delete("http://localhost:3000/logout", { withCredentials: true })
+      .then(response => {
+        this.props.handleLogout();
+      }).catch(error => {
+        console.log("log out errors", error)
+    })
+  }
+
   render() {
     return (
-      <div>
-        <div className="vw-100 vh-100 primary-color d-flex align-items-center justify-content-center">
-          <div className="jumbotron jumbotron-fluid bg-transparent">
-            <div className="container secondary-color">
-              <h1 className="center display-4">Welcome to To-do List</h1>
-              <p className="center">
-                An elegant, simple yet powerful way to manage your tasks
-              </p>
+      <div><br/><br/><br/><br/>
+        <div className="jumbotron jumbotron-fluid bg-white">
+          <h1 className="center display-4">Welcome to To-do List</h1>
+          <p className="center">
+            An elegant, simple yet powerful way to manage your tasks
+          </p>
 
-              <hr className="center" />
+          <hr className="center" />
+          {this.props.loggedInStatus === "LOGGED_IN" ?
+            <div>
+              <div className="container">
+                <div className="center ui teal message">Welcome, {this.props.username}</div>
+              </div><br/>
               <div className="center">
                 <Link
                   to="/tasks"
-                  className="ui basic teal button"
+                  className="ui basic blue button"
                   role="button"
                 >
                   View Tasks
                 </Link>
-                <Registration handleSuccessfulAuthentication={this.handleSuccessfulAuthentication}/>
-                <p>Status: {this.props.loggedInStatus}</p>
+                <button className={"ui basic red button"} onClick={() => this.handleLogoutClick()}>Log out</button>
               </div>
             </div>
-          </div>
+            :
+            <div className="container">
+              <br/>
+              <div className="center ui yellow message">You need to be logged in to continue</div>
+            </div>
+          }
         </div>
+        {this.props.loggedInStatus === "LOGGED_IN" ?
+          undefined
+          :
+          <div className="container">
+
+            <div className="ui transparent segment">
+              <div className="ui stackable very relaxed two column grid">
+                <div className="column">
+                  <Login handleSuccessfulAuthentication={this.handleSuccessfulAuthentication}/>
+                </div>
+                <div className="middle aligned column">
+
+                  <Registration handleSuccessfulAuthentication={this.handleSuccessfulAuthentication}/>
+                </div>
+              </div>
+              <div className="ui vertical divider">Or</div>
+            </div>
+          </div>
+        }
+        <br/><br/><br/>
       </div>
     )
   }

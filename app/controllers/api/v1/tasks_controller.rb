@@ -1,4 +1,6 @@
 class Api::V1::TasksController < ApplicationController
+  before_action :require_user
+
   def index
     task = Task.all.order(created_at: :desc)
     render json: task
@@ -46,5 +48,11 @@ class Api::V1::TasksController < ApplicationController
 
   def task
     @task ||= Task.find(params[:id])
+  end
+
+  def require_user
+    unless logged_in?
+      redirect_to root_path
+    end
   end
 end

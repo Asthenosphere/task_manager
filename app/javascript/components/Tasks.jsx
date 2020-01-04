@@ -22,7 +22,7 @@ class Tasks extends React.Component {
       .then(response => this.setState({ tasks: response }))
       .catch(() => this.props.history.push("/"));
   }
-  
+
   render() {
     const { tasks } = this.state;
     const allTasks = tasks.map((task, index) => (
@@ -50,7 +50,6 @@ class Tasks extends React.Component {
 
     return (
       <>
-        <p>Status: {this.props.loggedInStatus}</p>
         <section className="jumbotron jumbotron-fluid text-center">
           <div className="container py-5">
             <h1 className="display-4">All Tasks</h1>
@@ -73,7 +72,7 @@ class Tasks extends React.Component {
               Home
             </Link>
           </main>
-        </div>
+        </div><br/><br/>
       </>
     )
   }
