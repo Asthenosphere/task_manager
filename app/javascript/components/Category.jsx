@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import city from "./city.jpeg";
+import tag from "./tag-fill.svg";
 
-class Task extends React.Component {
+class Category extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { task: { description: "", status: false}};
+    this.state = { category: { name: "", description: ""}};
     this.addHtmlEntities = this.addHtmlEntities.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
+    this.deleteCategory = this.deleteCategory.bind(this);
   }
 
   componentDidMount() {
@@ -17,9 +18,9 @@ class Task extends React.Component {
         params: { id }
       }
     } = this.props;
-    
-    const url = `/api/v1/show/${id}`;
-    
+
+    const url = `/api/v3/show/${id}`;
+
     fetch(url)
       .then(response => {
         if (response.ok) {
@@ -27,12 +28,14 @@ class Task extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ task: response }))
-      .catch(() => this.props.history.push("/tasks"));
+      .then(response => {
+        this.setState({ category: response });
+      })
+      .catch(() => this.props.history.push("/categories"));
   }
 
-  deleteTask() {
-    let ask = window.confirm("Are you sure you want to delete this task?");
+  deleteCategory() {
+    let ask = window.confirm("Are you sure you want to delete this category?");
     if (!ask) {
       return;
     }
@@ -41,7 +44,7 @@ class Task extends React.Component {
         params: { id }
       }
     } = this.props;
-    const url = `/api/v1/destroy/${id}`;
+    const url = `/api/v3/destroy/${id}`;
     const token = document.querySelector('meta[name="csrf-token"]').content;
 
     fetch(url, {
@@ -57,7 +60,7 @@ class Task extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(() => this.props.history.push("/tasks"))
+      .then(() => this.props.history.push("/categories"))
       .catch(error => console.log(error.message));
   }
 
@@ -68,9 +71,11 @@ class Task extends React.Component {
   }
 
   render() {
-    const { task } = this.state;
-    const taskDescription = this.addHtmlEntities(task.description);
-    
+    const { category } = this.state;
+    const categoryDescription = this.addHtmlEntities(category.description);
+    const date = category.created_at;
+    const cdate = (new Date(date)).toDateString();
+
     return (
       <div className="">
         <div className="ui inverted menu">
@@ -92,40 +97,31 @@ class Task extends React.Component {
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
           <img src={city} width={"800"} height={"200"}/>
           <div className="container py-5">
-            <h1 className="display-4">{task.title}</h1>
+            <h1 className="display-4">{category.name}</h1>
           </div>
         </section>
 
-        <div className="ui centered three column grid">
-          <div className="column">
-            <div className="ui segment">
-              <h5>Task Description</h5>
-              <div dangerouslySetInnerHTML={{
-                __html: `${taskDescription}`
-              }}
-              />
-              <div className="ui left dividing rail">
-                <div className="ui segment">
-                  <h5 className="mb-2">Statues:</h5>
-                  <p>{task.status ? "Completed" : "Ongoing"}</p>
-                </div>
+        <div className="ui centered six column grid">
+          <div className="ui card">
+            <div className="content">
+              <div className="image">
+                <img src={tag} width={"192"} height={"192"}/>
               </div>
-              <div className="ui right dividing rail">
-                <div className="ui segment">
-                  <h5>Categories:</h5>
-                  <p>No categories created yet</p>
-                </div>
-              </div>
+              <div className="ui divider"/>
+              <div className="center header">{category.name}</div>
+              <div className="meta">Created on {cdate}</div><br/>
+              <div className="description">Description</div>
+              <div className="meta">{category.description}</div>
             </div>
           </div>
         </div><br/><br/><br/>
         <div className="container">
           <div className="center">
-            <button type="button" className="ui basic red button" onClick={this.deleteTask}>Delete Task</button>
+            <button type="button" className="ui basic red button" onClick={this.deleteCategory}>Delete Category</button>
             {"  "}
-            <Link to={"/task/" + task.id + "/edit"} className="ui basic blue button">Update Task</Link>
+            <Link to={"/category/" + category.id + "/update"} className="ui basic blue button">Update Category</Link>
             {"  "}
-            <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link>
+            <Link to="/categories" className="ui basic teal button">Back to Categories</Link>
           </div>
         </div><br/><br/><br/><br/>
         <Footer />
@@ -134,4 +130,4 @@ class Task extends React.Component {
   }
 }
 
-export default Task
+export default Category

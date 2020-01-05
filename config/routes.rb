@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
   namespace :api do
+    namespace :v3 do
+      get 'categories/index'
+      post 'categories/create'
+      get '/show/:id', to: 'categories#show'
+      post '/update/:id', to: 'categories#update'
+      delete '/destroy/:id', to: 'categories#destroy'
+    end
+  end
+  namespace :api do
     namespace :v2 do
       get 'users/index'
       get '/show/:id', to: 'users#show'

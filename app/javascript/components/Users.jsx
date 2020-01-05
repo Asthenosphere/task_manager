@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import 'semantic-ui-css/semantic.min.css'
 import Footer from "./Footer";
 import city from './city.jpeg';
 
@@ -50,7 +49,7 @@ class Users extends React.Component {
           <Link to="/new_task" className="item">
             New Task
           </Link>
-          <a className="item">Categories</a>
+          <Link to="/categories" className="item">Categories</Link>
           <a className="item">New Category</a>
           <a className="active item">Users</a>
           <div className="right menu">

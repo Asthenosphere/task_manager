@@ -56,8 +56,8 @@ class TaskNew extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => {
-        this.props.history.push(`/task/${response.id}`);
         this.props.history.push(`/task/${response.id}/edit`);
+        this.props.history.push(`/task/${response.id}`);
       })
       .catch(error => {
         window.alert("Task title duplicated, please try another one.");
@@ -73,7 +73,7 @@ class TaskNew extends React.Component {
           <Link to="/new_task" className="active item">
             New Task
           </Link>
-          <a className="item">Categories</a>
+          <Link to="/categories" className="item">Categories</Link>
           <a className="item">New Category</a>
           {this.props.admin ?
             <Link to="/users" className="item">Users</Link>

@@ -103,7 +103,7 @@ class TaskNew extends React.Component {
           <Link to="/new_task" className="item">
             New Task
           </Link>
-          <a className="item">Categories</a>
+          <Link to="/categories" className="item">Categories</Link>
           <a className="item">New Category</a>
           {this.props.admin ?
             <Link to="/users" className="item">Users</Link>

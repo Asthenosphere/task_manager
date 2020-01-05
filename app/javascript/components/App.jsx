@@ -8,6 +8,8 @@ import TaskNew from "../components/TaskNew";
 import TaskEdit from "../components/TaskEdit";
 import Users from "./Users";
 import User from "./User"
+import Categories from "./Categories";
+import Category from "./Category";
 
 export default class App extends React.Component {
   constructor() {
@@ -109,8 +111,19 @@ export default class App extends React.Component {
                 admin={this.state.user.admin}
               />
             )} />
-            <Route path="/users" exact component={Users} />
-            <Route path="/user/:id" exact component={User} />
+            <Route exact path="/users" render={props => (
+              <Users
+                {...props}
+                admin={this.state.user.admin}
+              />
+            )} />
+            <Route exact path="/user/:id" render={props => (
+              <User{...props}
+                admin={this.state.user.admin}
+              />
+            )} />
+            <Route path="/categories" exact component={Categories} />
+            <Route path="/category/:id" exact component={Category} />
           </Switch>
         </Router>
       </div>
