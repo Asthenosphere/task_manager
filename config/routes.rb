@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v2 do
+      get 'users/index'
+      get '/show/:id', to: 'users#show'
+      delete '/destroy/:id', to: 'users#destroy'
+    end
+  end
   resources :sessions, only: [:create]
   resources :registrations, only: [:create]
   delete :logout, to: "sessions#logout"

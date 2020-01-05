@@ -20,5 +20,4 @@ class RegistrationsController < ApplicationController
     end
   end
 
-
 end

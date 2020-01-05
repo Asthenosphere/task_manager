@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
+import city from "./city.jpeg";
 
 
 class TaskNew extends React.Component {
@@ -88,29 +89,64 @@ class TaskNew extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => this.props.history.push(`/task/${response.id}`))
-      .catch(error => console.log(error));
+      .catch(error => {
+        window.alert("Task title duplicated, please try another one.");
+        console.log(error)
+      });
   }
 
   render() {
     return (
-      <div className="container-sm"><br/>
-        <div className="center ui huge header">
-          Update existing task
+      <div>
+        <div className="ui inverted menu">
+          <Link to="/tasks" className="item">Tasks</Link>
+          <Link to="/new_task" className="item">
+            New Task
+          </Link>
+          <a className="item">Categories</a>
+          <a className="item">New Category</a>
+          {this.props.admin ?
+            <Link to="/users" className="item">Users</Link>
+            :
+            undefined
+          }
+          <div className="right menu">
+            <Link to="/" className="item">
+              Home
+            </Link>
+          </div>
         </div>
-        <form className="ui form" onSubmit={this.onSubmit}>
-          <div className="field">
-            <label htmlFor="taskTitle">Title</label>
-            <input type="text" defaultValue={this.state.title} name="title" id="taskTitle" className="form-control" required onChange={this.onChange}/>
+        <section className="jumbotron jumbotron-fluid text-center bg-transparent">
+          <img src={city} width={"800"} height={"200"}/>
+          <div className="container py-5">
+            <h1 className="display-4">Update Task</h1>
+            <h4>Update existing task that you've created earlier</h4>
           </div>
-          <div className="field">
-            <label htmlFor="description">Description of Task</label>
-            <textarea className="form-control" id="description" defaultValue={this.state.description} name="description" rows="5" required onChange={this.onChange}/>
+        </section>
+        <div className="ui grid">
+          <div className="ui five wide column"/>
+          <div className="ui six wide column">
+            <div className="ui center aligned segment">
+              <form className="ui form" onSubmit={this.onSubmit}>
+                <br/>
+                <h5>Title</h5>
+                <div className="field">
+                  <label htmlFor="taskTitle"/>
+                  <input type="text" defaultValue={this.state.title} name="title" id="taskTitle" className="form-control" required onChange={this.onChange}/>
+                </div>
+                <h5>Description</h5>
+                <div className="field">
+                  <label htmlFor="description"/>
+                  <textarea className="form-control" id="description" defaultValue={this.state.description} name="description" rows="5" required onChange={this.onChange}/>
+                </div><br/>
+                <button type="submit" className="ui basic blue button">
+                  Update Task
+                </button>
+                <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link>
+              </form><br/>
+            </div>
           </div>
-          <button type="submit" className="ui basic blue button">
-            Update Task
-          </button>
-          <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link>
-        </form><br/><br/>
+        </div><br/><br/>
         <Footer />
       </div>
     )

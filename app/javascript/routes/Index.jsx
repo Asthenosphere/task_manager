@@ -5,6 +5,8 @@ import Tasks from "../components/Tasks";
 import Task from "../components/Task";
 import TaskNew from "../components/TaskNew";
 import TaskEdit from "../components/TaskEdit";
+import Users from "../components/Users";
+import User from "../components/User"
 
 export default (
   <Router>
@@ -14,6 +16,8 @@ export default (
       <Route path="/task/:id" exact component={Task} />
       <Route path="/new_task" exact component={TaskNew} />
       <Route path="/task/:id/edit" exact component={TaskEdit} />
+      <Route path="/users" exact component={Users} />
+      <Route path="/user/:id" exact component={User} />
     </Switch>
   </Router>
 );

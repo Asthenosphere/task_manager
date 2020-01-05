@@ -6,6 +6,8 @@ import Tasks from "../components/Tasks";
 import Task from "../components/Task";
 import TaskNew from "../components/TaskNew";
 import TaskEdit from "../components/TaskEdit";
+import Users from "./Users";
+import User from "./User"
 
 export default class App extends React.Component {
   constructor() {
@@ -72,6 +74,7 @@ export default class App extends React.Component {
                   handleLogout={this.handleLogout}
                   loggedInStatus={this.state.loggedInStatus}
                   username={this.state.user.username}
+                  admin={this.state.user.admin}
                 />
               )}
             />
@@ -81,12 +84,33 @@ export default class App extends React.Component {
                 <Tasks
                   {...props}
                   loggedInStatus={this.state.loggedInStatus}
+                  admin={this.state.user.admin}
                 />
               )}
             />
-            <Route path="/task/:id" exact component={Task} />
-            <Route path="/new_task" exact component={TaskNew} />
-            <Route path="/task/:id/edit" exact component={TaskEdit} />
+            <Route
+              exact path="/task/:id"
+              render={props => (
+                <Task
+                  {...props}
+                  admin={this.state.user.admin}
+                />
+              )}
+            />
+            <Route exact path="/new_task" render={props => (
+              <TaskNew
+                {...props}
+                admin={this.state.user.admin}
+              />
+              )} />
+            <Route exact path="/task/:id/edit" render={props => (
+              <TaskEdit
+                {...props}
+                admin={this.state.user.admin}
+              />
+            )} />
+            <Route path="/users" exact component={Users} />
+            <Route path="/user/:id" exact component={User} />
           </Switch>
         </Router>
       </div>

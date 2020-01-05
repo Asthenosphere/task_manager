@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css';
 import Footer from "./Footer";
+import city from "./city.jpeg";
 
 class TaskNew extends React.Component {
   constructor(props) {
@@ -54,9 +55,12 @@ class TaskNew extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.props.history.push(`/task/${response.id}`))
+      .then(response => {
+        this.props.history.push(`/task/${response.id}`);
+        this.props.history.push(`/task/${response.id}/edit`);
+      })
       .catch(error => {
-        window.alert("Task title duplicated, please try another one.")
+        window.alert("Task title duplicated, please try another one.");
         console.log(error.message);
       });
   }
@@ -71,31 +75,49 @@ class TaskNew extends React.Component {
           </Link>
           <a className="item">Categories</a>
           <a className="item">New Category</a>
+          {this.props.admin ?
+            <Link to="/users" className="item">Users</Link>
+            :
+            undefined
+          }
           <div className="right menu">
             <Link to="/" className="item">
               Home
             </Link>
           </div>
         </div>
-        <div className="container"><br/>
-          <div className="center ui huge header">Create a new task to remind yourself</div>
-
-          <form className="ui form" onSubmit={this.onSubmit}>
-            <div className="field">
-              <label htmlFor="taskTitle">Title</label>
-              <input type="text" placeholder="Title of Task" name="title" id="taskTitle" autoFocus="autofocus" className="form-control" required onChange={this.onChange}/>
+        <section className="jumbotron jumbotron-fluid text-center bg-transparent">
+          <img src={city} width={"800"} height={"200"}/>
+          <div className="container py-5">
+            <h1 className="display-4">New Task</h1>
+            <h4>Create a new task to remind yourself</h4>
+          </div>
+        </section>
+        <div className="ui grid">
+          <div className="ui five wide column"/>
+          <div className="ui six wide column">
+            <div className="ui center aligned segment">
+              <form className="ui form" onSubmit={this.onSubmit}>
+                <br/>
+                <h5>Title</h5>
+                <div className="field">
+                  <label htmlFor="taskTitle"/>
+                  <input type="text" placeholder="Title of Task" name="title" id="taskTitle" autoFocus="autofocus" className="form-control" required onChange={this.onChange}/>
+                </div>
+                <h5>Description</h5>
+                <div className="field">
+                  <label htmlFor="description"/>
+                  <textarea placeholder="Description of Task" className="form-control" id="description" name="description" rows="5" required onChange={this.onChange}/>
+                </div><br/>
+                <button type="submit" className="ui basic blue button">
+                  Create Task
+                </button>
+                <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link><br/>
+              </form><br/>
             </div>
-            <div className="field">
-              <label htmlFor="description">Description of Task</label>
-              <textarea placeholder="Description of Task" className="form-control" id="description" name="description" rows="5" required onChange={this.onChange}/>
-            </div>
-            <button type="submit" className="ui basic blue button">
-              Create Task
-            </button>
-            <Link to="/tasks" className="ui basic teal button">Back to Tasks</Link>
-          </form>
-          <Footer />
-        </div>
+          </div>
+        </div><br/><br/><br/>
+        <Footer /><br/>
       </div>
     )
   }

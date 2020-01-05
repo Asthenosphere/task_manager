@@ -38,6 +38,11 @@ export default class Root extends React.Component {
             </Link>
             <a className="item">Categories</a>
             <a className="item">New Category</a>
+            {this.props.admin ?
+              <Link to="/users" className="item">Users</Link>
+              :
+              undefined
+            }
             <div className="right menu">
               <Link to="/" className="active item">
                 Home
@@ -58,7 +63,11 @@ export default class Root extends React.Component {
           {this.props.loggedInStatus === "LOGGED_IN" ?
             <div>
               <div className="container"><br/>
-                <div className="center ui teal message">Welcome, {this.props.username}</div>
+                {this.props.admin ?
+                  <div className="center ui teal message">Welcome, {this.props.username} (Admin)</div>
+                  :
+                  <div className="center ui teal message">Welcome, {this.props.username}</div>
+                }
               </div><br/><br/>
               <div className="center">
                 <Link
