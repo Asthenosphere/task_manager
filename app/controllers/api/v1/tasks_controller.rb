@@ -11,7 +11,7 @@ class Api::V1::TasksController < ApplicationController
     task = Task.new(task_params)
     task.user = current_user
     if task.save
-      render json: task
+      render json: { task: task, categories: task.categories }
     else
       render json: task.errors.full_messages
     end
@@ -19,7 +19,11 @@ class Api::V1::TasksController < ApplicationController
 
   def show
     if task && (task.user == current_user)
-      render json: task
+      render json: {
+          task: task,
+          categories: task.categories,
+          allCategories: Category.all
+      }
     else
       redirect_to root_path
     end
@@ -46,7 +50,7 @@ class Api::V1::TasksController < ApplicationController
   private
 
   def task_params
-    params.permit(:title, :description, :status)
+    params.permit(:title, :description, :status, category_ids: [])
   end
 
   def task

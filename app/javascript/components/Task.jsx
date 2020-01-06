@@ -6,7 +6,10 @@ import city from "./city.jpeg";
 class Task extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { task: { description: "", status: false}};
+    this.state = {
+      task: { description: "", status: false},
+      categories: []
+    };
     this.addHtmlEntities = this.addHtmlEntities.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
   }
@@ -27,7 +30,11 @@ class Task extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ task: response }))
+      .then(response => {
+        console.log(response);
+        this.setState({task: response.task, categories: response.categories});
+      }
+      )
       .catch(() => this.props.history.push("/tasks"));
   }
 
@@ -68,7 +75,7 @@ class Task extends React.Component {
   }
 
   render() {
-    const { task } = this.state;
+    const { task, categories } = this.state;
     const taskDescription = this.addHtmlEntities(task.description);
     
     return (
@@ -98,22 +105,33 @@ class Task extends React.Component {
 
         <div className="ui centered three column grid">
           <div className="column">
-            <div className="ui segment">
+            <div className="ui piled segment">
               <h5>Task Description</h5>
               <div dangerouslySetInnerHTML={{
                 __html: `${taskDescription}`
               }}
               />
               <div className="ui left dividing rail">
-                <div className="ui segment">
-                  <h5 className="mb-2">Statues:</h5>
-                  <p>{task.status ? "Completed" : "Ongoing"}</p>
+                <div className="ui piled segment">
+                  <h5 className="mb-2">Status:</h5>
+                  {task.status ?
+                    <a className="ui green ribbon label">Completed</a>
+                    :
+                    <a className="ui red tag label">Ongoing</a>
+                  }
                 </div>
               </div>
               <div className="ui right dividing rail">
-                <div className="ui segment">
+                <div className="ui piled segment">
                   <h5>Categories:</h5>
-                  <p>No categories created yet</p>
+                  {categories.length === 0 ?
+                    <p>Task has no category</p>
+                    :
+                    undefined
+                  }
+                  {categories.map(category => {
+                    return <Link to={"/categories/" + category.id} className="ui tag label" key={category.name} >{category.name}</Link>
+                  })}
                 </div>
               </div>
             </div>

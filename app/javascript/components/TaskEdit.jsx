@@ -4,18 +4,21 @@ import Footer from "./Footer";
 import city from "./city.jpeg";
 
 
-class TaskNew extends React.Component {
+class TaskEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
       description: "",
-      status: false
+      status: false,
+      category_ids: [],
+      allCategories: []
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.stripHtmlEntities = this.stripHtmlEntities.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   componentDidMount() {
@@ -34,10 +37,13 @@ class TaskNew extends React.Component {
         }
         throw new Error("Network response was not ok.");
       }).then(function(data) {
+        console.log(data);
         _this.setState({
-          title: data.title,
-          description: data.description,
-          status: data.status
+          title: data.task.title,
+          description: data.task.description,
+          status: data.task.status,
+          category_ids: data.categories.map(cat => cat.id),
+          allCategories: data.allCategories
         })
         }
     );
@@ -51,6 +57,20 @@ class TaskNew extends React.Component {
 
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+    console.log(this.state);
+  }
+
+  handleCheck(event) {
+    let value = event.target.value;
+    let newArray;
+    if (this.state.category_ids.indexOf(value) > -1) {
+      newArray = this.state.category_ids.filter(s => s !== value);
+    } else {
+      newArray = [...this.state.category_ids, value];
+    }
+    this.setState( prevState => ({
+      category_ids: newArray
+    }));
   }
 
   onSubmit(event) {
@@ -61,7 +81,7 @@ class TaskNew extends React.Component {
     } = this.props;
     event.preventDefault();
     const url = `/api/v1/edit/${id}`;
-    const { title, description, status } = this.state;
+    const { title, description, status, category_ids } = this.state;
 
     if (title.length === 0 || description.length === 0)
       return;
@@ -69,7 +89,8 @@ class TaskNew extends React.Component {
     const body = {
       title,
       description,
-      status
+      status,
+      category_ids
     };
 
     const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -138,7 +159,35 @@ class TaskNew extends React.Component {
                 <div className="field">
                   <label htmlFor="description"/>
                   <textarea className="form-control" id="description" defaultValue={this.state.description} name="description" rows="5" required onChange={this.onChange}/>
-                </div><br/>
+                </div>
+                <h5>Categories</h5>
+                <div className="inline fields">
+                  { this.state.allCategories.map((cat) => {
+                    if (this.state.category_ids.includes(cat.id)) {
+                      return <div className="field" key={cat.id}>
+                        <div className="ui checkbox">
+                          <input type="checkbox" className="hidden" defaultChecked={true} value={cat.id}
+                                 name="category_ids"
+                                 id={"task_category_ids_" + cat.id} onChange={this.handleCheck}/>
+                          <label className="checkbox-inline input_checkbox"
+                                 htmlFor={"task_category_ids_" + cat.id}>{cat.name}</label>
+                        </div>
+                      </div>
+                    } else {
+                      return <div className="field" key={cat.id}>
+                        <div className="ui checkbox">
+                          <input type="checkbox" className="hidden" defaultChecked={false} value={cat.id}
+                                 name="category_ids"
+                                 id={"task_category_ids_" + cat.id} onChange={this.handleCheck}/>
+                          <label className="checkbox-inline input_checkbox"
+                                 htmlFor={"task_category_ids_" + cat.id}>{cat.name}</label>
+                        </div>
+                      </div>
+                    }
+                  })
+                  }
+                </div>
+                <br/>
                 <button type="submit" className="ui basic blue button">
                   Update Task
                 </button>
@@ -153,4 +202,4 @@ class TaskNew extends React.Component {
   }
 }
 
-export default TaskNew
+export default TaskEdit

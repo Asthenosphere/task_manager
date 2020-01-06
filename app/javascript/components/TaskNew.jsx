@@ -10,11 +10,30 @@ class TaskNew extends React.Component {
     this.state = {
       title: "",
       description: "",
-      status: false
+      status: false,
+      category_ids: [],
+      allCategories: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.stripHtmlEntities = this.stripHtmlEntities.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+  }
+
+  componentDidMount() {
+    const url = "/api/v3/categories/index";
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => {
+        console.log(response);
+        this.setState({allCategories: response});
+      })
+      .catch(() => this.props.history.push("/"));
   }
 
   stripHtmlEntities(str) {
@@ -27,17 +46,32 @@ class TaskNew extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  handleCheck(event) {
+    let value = event.target.value;
+    let newArray;
+    if (this.state.category_ids.indexOf(value) > -1) {
+      newArray = this.state.category_ids.filter(s => s !== value);
+    } else {
+      newArray = [...this.state.category_ids, value];
+    }
+    this.setState( prevState => ({
+      category_ids: newArray
+    }));
+  }
+
+
   onSubmit(event) {
     event.preventDefault();
     const url = "/api/v1/tasks/create";
-    const { title, description, status } = this.state;
+    const { title, description, status, category_ids } = this.state;
     if (title.length === 0 || description.length === 0)
       return;
 
-    const body = {
+    let body = {
       title,
       description,
-      status
+      status,
+      category_ids
     };
 
     const token = document.querySelector('meta[name="csrf-token"]').content;
@@ -56,12 +90,12 @@ class TaskNew extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => {
-        this.props.history.push(`/task/${response.id}/edit`);
-        this.props.history.push(`/task/${response.id}`);
+        console.log(response);
+        this.props.history.push(`/task/${response.task.id}`);
       })
       .catch(error => {
         window.alert("Task title duplicated, please try another one.");
-        console.log(error.message);
+        console.log(error);
       });
   }
 
@@ -108,7 +142,22 @@ class TaskNew extends React.Component {
                 <div className="field">
                   <label htmlFor="description"/>
                   <textarea placeholder="Description of Task" className="form-control" id="description" name="description" rows="5" required onChange={this.onChange}/>
-                </div><br/>
+                </div>
+                <h5>Categories</h5>
+                <div className="inline fields">
+                  { this.state.allCategories.map((cat) => {
+                    return <div className="field" key={cat.id}>
+                      <div className="ui checkbox">
+                        <input type="checkbox" className="hidden" defaultChecked={false} value={cat.id} name="category_ids"
+                               id={"task_category_ids_" + cat.id} onChange={this.handleCheck}/>
+                        <label className="checkbox-inline input_checkbox"
+                               htmlFor={"task_category_ids_" + cat.id}>{cat.name}</label>
+                      </div>
+                    </div>
+                  })
+                  }
+                </div>
+                <br/>
                 <button type="submit" className="ui basic blue button">
                   Create Task
                 </button>
