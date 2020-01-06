@@ -9,6 +9,8 @@ import Users from "../components/Users";
 import User from "../components/User";
 import Categories from "../components/Categories";
 import Category from "../components/Category";
+import CategoryNew from "../components/CategoryNew";
+import CategoryEdit from "../components/CategoryEdit";
 
 export default (
   <Router>
@@ -22,6 +24,8 @@ export default (
       <Route path="/user/:id" exact component={User} />
       <Route path="/categories" exact component={Categories} />
       <Route path="/category/:id" exact component={Category} />
+      <Route path="/new_category" exact component={CategoryNew} />
+      <Route path="/category/:id/update" exact component={CategoryEdit} />
     </Switch>
   </Router>
 );

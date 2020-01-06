@@ -10,6 +10,8 @@ import Users from "./Users";
 import User from "./User"
 import Categories from "./Categories";
 import Category from "./Category";
+import CategoryNew from "./CategoryNew";
+import CategoryEdit from "./CategoryEdit";
 
 export default class App extends React.Component {
   constructor() {
@@ -124,6 +126,8 @@ export default class App extends React.Component {
             )} />
             <Route path="/categories" exact component={Categories} />
             <Route path="/category/:id" exact component={Category} />
+            <Route path="/new_category" exact component={CategoryNew} />
+            <Route path="/category/:id/update" exact component={CategoryEdit} />
           </Switch>
         </Router>
       </div>

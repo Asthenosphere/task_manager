@@ -50,7 +50,7 @@ class Categories extends React.Component {
             New Task
           </Link>
           <a className="active item">Categories</a>
-          <a className="item">New Category</a>
+          <Link to="/new_category" className="item">New Category</Link>
           <Link to="/users" className="item">Users</Link>
           <div className="right menu">
             <Link to="/" className="item">
@@ -69,6 +69,11 @@ class Categories extends React.Component {
         </section>
         <div className="center">
           <main className="container">
+            <div className="center">
+              <Link to="/new_category" className="ui basic blue button">
+                Create New Category
+              </Link>
+            </div><br/><br/>
             <div className="row">
               {allCategories}
             </div>

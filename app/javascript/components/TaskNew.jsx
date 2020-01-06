@@ -16,7 +16,6 @@ class TaskNew extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.stripHtmlEntities = this.stripHtmlEntities.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
   }
 
@@ -34,12 +33,6 @@ class TaskNew extends React.Component {
         this.setState({allCategories: response});
       })
       .catch(() => this.props.history.push("/"));
-  }
-
-  stripHtmlEntities(str) {
-    return String(str)
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
   }
 
   onChange(event) {
