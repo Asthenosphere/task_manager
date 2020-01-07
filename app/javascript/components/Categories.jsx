@@ -51,7 +51,11 @@ class Categories extends React.Component {
           </Link>
           <a className="active item">Categories</a>
           <Link to="/new_category" className="item">New Category</Link>
-          <Link to="/users" className="item">Users</Link>
+          {this.props.admin ?
+            <Link to="/users" className="item">Users</Link>
+            :
+            undefined
+          }
           <div className="right menu">
             <Link to="/" className="item">
               Home

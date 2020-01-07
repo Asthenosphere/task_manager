@@ -1,11 +1,13 @@
 class Api::V3::CategoriesController < ApplicationController
+  before_action :require_user
   def index
-    categories = Category.all.order(created_at: :desc)
+    categories = current_user.categories.order(created_at: :desc)
     render json: categories
   end
 
   def create
     category = Category.new(category_params)
+    category.user = current_user
     if category.save
       render json: category
     else
@@ -15,7 +17,10 @@ class Api::V3::CategoriesController < ApplicationController
 
   def show
     if category
-      render json: category
+      render json: {
+          category: category,
+          tasks: category.tasks
+      }
     else
       render json: category.errors.full_messages
     end
@@ -47,6 +52,12 @@ class Api::V3::CategoriesController < ApplicationController
 
   def category
     @category ||= Category.find(params[:id])
+  end
+
+  def require_user
+    unless logged_in?
+      redirect_to root_path
+    end
   end
 
 end

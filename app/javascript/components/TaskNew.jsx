@@ -83,11 +83,14 @@ class TaskNew extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => {
-        console.log(response);
+        if (response[0] === "Title has already been taken") {
+          window.alert("Task title duplicated, please try another one.");
+          return;
+        }
         this.props.history.push(`/task/${response.task.id}`);
       })
       .catch(error => {
-        window.alert("Task title duplicated, please try another one.");
+
         console.log(error);
       });
   }

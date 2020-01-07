@@ -7,7 +7,7 @@ import tag from "./tag-fill.svg";
 class Category extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { category: { name: "", description: ""}};
+    this.state = { category: { name: "", description: ""}, tasks: []};
     this.addHtmlEntities = this.addHtmlEntities.bind(this);
     this.deleteCategory = this.deleteCategory.bind(this);
   }
@@ -29,7 +29,8 @@ class Category extends React.Component {
         throw new Error("Network response was not ok.");
       })
       .then(response => {
-        this.setState({ category: response });
+        console.log(response);
+        this.setState({ category: response.category, tasks: response.tasks});
       })
       .catch(() => this.props.history.push("/categories"));
   }
@@ -71,10 +72,34 @@ class Category extends React.Component {
   }
 
   render() {
-    const { category } = this.state;
+    const { category, tasks } = this.state;
     const categoryDescription = this.addHtmlEntities(category.description);
     const date = category.created_at;
     const cdate = (new Date(date)).toDateString();
+    console.log(this.state);
+    const allTasks = tasks.map((task, index) => (
+      <div key={index} className="col-md-5 col-lg-3">
+        <div className="ui stacked card mb-5">
+          <div className="content">
+            <div className="header">
+              {task.title}
+            </div>
+            <div className="description">{task.description}</div>
+            {task.status ?
+              <div className="ui green basic pointing label">Completed</div>
+              :
+              <div className="ui red basic pointing label">Ongoing</div>
+            }
+          </div>
+          <div className="extra content">
+            <Link to={`/task/${task.id}`} className="ui basic orange button">
+              View Task
+            </Link>
+          </div>
+        </div>
+      </div>
+    ));
+
 
     return (
       <div className="">
@@ -115,6 +140,20 @@ class Category extends React.Component {
             </div>
           </div>
         </div><br/><br/><br/>
+        <div className="center ui huge header">All tasks under {category.name}</div>
+        <br/><br/>
+        {tasks.length === 0 ?
+          <div className="center ui big header">No tasks under this category</div>
+        :
+          <div className="center">
+            <main className="container">
+              <div className="row">
+                {allTasks}
+              </div>
+            </main>
+          </div>
+        }
+        <br/><br/>
         <div className="container">
           <div className="center">
             <button type="button" className="ui basic red button" onClick={this.deleteCategory}>Delete Category</button>

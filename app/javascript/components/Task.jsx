@@ -117,7 +117,7 @@ class Task extends React.Component {
                   {task.status ?
                     <a className="ui green ribbon label">Completed</a>
                     :
-                    <a className="ui red tag label">Ongoing</a>
+                    <a className="ui red ribbon label">Ongoing</a>
                   }
                 </div>
               </div>

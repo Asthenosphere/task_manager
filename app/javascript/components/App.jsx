@@ -120,14 +120,35 @@ export default class App extends React.Component {
               />
             )} />
             <Route exact path="/user/:id" render={props => (
-              <User{...props}
+              <User
+                {...props}
                 admin={this.state.user.admin}
               />
             )} />
-            <Route path="/categories" exact component={Categories} />
-            <Route path="/category/:id" exact component={Category} />
-            <Route path="/new_category" exact component={CategoryNew} />
-            <Route path="/category/:id/update" exact component={CategoryEdit} />
+            <Route exact path="/categories" render={props => (
+              <Categories
+                {...props}
+                admin={this.state.user.admin}
+              />
+            )} />
+            <Route exact path="/category/:id" render={props => (
+              <Category
+                {...props}
+                admin={this.state.user.admin}
+              />
+            )} />
+            <Route exact path="/new_category" render={props => (
+              <CategoryNew
+                {...props}
+                admin={this.state.user.admin}
+              />
+            )} />
+            <Route exact path="/category/:id/update" render={props => (
+              <CategoryEdit
+                {...props}
+                admin={this.state.user.admin}
+              />
+            )} />
           </Switch>
         </Router>
       </div>

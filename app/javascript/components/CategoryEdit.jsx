@@ -54,7 +54,7 @@ class CategoryEdit extends React.Component {
 
     const { name, description } = this.state;
 
-    if (title.length === 0 || description.length === 0)
+    if (name.length === 0 || description.length === 0)
       return;
 
     const body = {
@@ -121,7 +121,7 @@ class CategoryEdit extends React.Component {
                 <h5>Name</h5>
                 <div className="field">
                   <label htmlFor="categoryName"/>
-                  <input type="text" defaultValue={this.state.title} name="name" id="categoryName" className="form-control" required onChange={this.onChange}/>
+                  <input type="text" defaultValue={this.state.name} name="name" id="categoryName" className="form-control" required onChange={this.onChange}/>
                 </div>
                 <h5>Description</h5>
                 <div className="field">

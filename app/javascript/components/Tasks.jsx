@@ -31,8 +31,15 @@ class Tasks extends React.Component {
       <div key={index} className="col-md-5 col-lg-3">
         <div className="ui stacked card mb-5">
           <div className="content">
-            <div className="header">{task.title}</div>
+            <div className="header">
+              {task.title}
+            </div>
             <div className="description">{task.description}</div>
+            {task.status ?
+              <div className="ui green basic pointing label">Completed</div>
+              :
+              <div className="ui red basic pointing label">Ongoing</div>
+            }
           </div>
           <div className="extra content">
             <Link to={`/task/${task.id}`} className="ui basic orange button">

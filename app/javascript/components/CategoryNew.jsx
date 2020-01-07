@@ -43,16 +43,20 @@ class CategoryNew extends React.Component {
     })
       .then(response => {
         if (response.ok) {
+          console.log(response);
           return response.json();
         }
         throw new Error("Network response was not ok.");
       })
       .then(response => {
-        console.log(response);
+        if (response[0] === "Name has already been taken") {
+          window.alert("Category name duplicated, please try another one.");
+          return;
+        }
         this.props.history.push(`/category/${response.id}`);
       })
       .catch(error => {
-        window.alert("Category name duplicated, please try another one.");
+
         console.log(error);
       });
   }
@@ -62,7 +66,7 @@ class CategoryNew extends React.Component {
       <div>
         <div className="ui inverted menu">
           <Link to="/tasks" className="item">Tasks</Link>
-          <Link to="/new_task" className="active item">
+          <Link to="/new_task" className="item">
             New Task
           </Link>
           <Link to="/categories" className="item">Categories</Link>

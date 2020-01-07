@@ -22,7 +22,7 @@ class Api::V1::TasksController < ApplicationController
       render json: {
           task: task,
           categories: task.categories,
-          allCategories: Category.all
+          allCategories: current_user.categories
       }
     else
       redirect_to root_path

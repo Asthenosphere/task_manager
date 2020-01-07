@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import city from "./city.jpeg";
+import { Checkbox } from "semantic-ui-react";
 
 
 class TaskEdit extends React.Component {
@@ -19,6 +20,7 @@ class TaskEdit extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.stripHtmlEntities = this.stripHtmlEntities.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.handleStatus = this.handleStatus.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +73,12 @@ class TaskEdit extends React.Component {
     this.setState( prevState => ({
       category_ids: newArray
     }));
+  }
+
+  handleStatus(event) {
+    let status = event.target.checked;
+    this.setState({[event.target.name]: status});
+    console.log(this.state.status);
   }
 
   onSubmit(event) {
@@ -187,7 +195,13 @@ class TaskEdit extends React.Component {
                   })
                   }
                 </div>
-                <br/>
+                <h5>Status</h5>
+                  <Checkbox slider name="status" id="taskStatus"
+                            checked={this.state.status}
+                            onChange={this.handleStatus}
+                            label="Slide to change status"
+                  />
+                <br/><br/>
                 <button type="submit" className="ui basic blue button">
                   Update Task
                 </button>
