@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css';
 import Footer from "./Footer";
-import city from "./city.jpeg";
+import city from "./Rome.png";
 
 class TaskNew extends React.Component {
   constructor(props) {
@@ -104,7 +104,7 @@ class TaskNew extends React.Component {
             New Task
           </Link>
           <Link to="/categories" className="item">Categories</Link>
-          <a className="item">New Category</a>
+          <Link to="/new_category" className="item">New Category</Link>
           {this.props.admin ?
             <Link to="/users" className="item">Users</Link>
             :
@@ -117,7 +117,7 @@ class TaskNew extends React.Component {
           </div>
         </div>
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
-          <img src={city} width={"800"} height={"200"}/>
+          <img src={city} width={"556"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">New Task</h1>
             <h4>Create a new task to remind yourself</h4>

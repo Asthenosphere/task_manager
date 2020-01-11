@@ -37,7 +37,7 @@ export default class Root extends React.Component {
               New Task
             </Link>
             <Link to="/categories" className="item">Categories</Link>
-            <a className="item">New Category</a>
+            <Link to="/new_category" className="item">New Category</Link>
             {this.props.admin ?
               <Link to="/users" className="item">Users</Link>
               :

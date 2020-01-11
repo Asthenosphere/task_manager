@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import city from './city.jpeg';
+import city from './Istanbul.png';
 
 class Users extends React.Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class Users extends React.Component {
             New Task
           </Link>
           <Link to="/categories" className="item">Categories</Link>
-          <a className="item">New Category</a>
+          <Link to="/new_category" className="item">New Category</Link>
           <a className="active item">Users</a>
           <div className="right menu">
             <Link to="/" className="item">
@@ -59,7 +59,7 @@ class Users extends React.Component {
           </div>
         </div>
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
-          <img src={city} width={"800"} height={"200"}/>
+          <img src={city} width={"589"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">All Users</h1>
             <h4>

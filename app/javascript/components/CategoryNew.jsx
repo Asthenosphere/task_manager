@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css';
 import Footer from "./Footer";
-import city from "./city.jpeg";
+import city from "./Venice.png";
 
 class CategoryNew extends React.Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class CategoryNew extends React.Component {
           </div>
         </div>
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
-          <img src={city} width={"800"} height={"200"}/>
+          <img src={city} width={"532"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">New Category</h1>
             <h4>Create a category to tag your tasks</h4>

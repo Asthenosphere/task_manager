@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import city from "./city.jpeg";
+import city from "./Tokyo.png";
 import { Checkbox } from "semantic-ui-react";
 
 
@@ -146,7 +146,7 @@ class TaskEdit extends React.Component {
           </div>
         </div>
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
-          <img src={city} width={"800"} height={"200"}/>
+          <img src={city} width={"444"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">Update Task</h1>
             <h4>Update existing task that you've created earlier</h4>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import city from "./city.jpeg";
+import city from "./Barcelona.png";
 import person from "./person-fill.svg";
 
 class User extends React.Component {
@@ -72,7 +72,7 @@ class User extends React.Component {
           <Link to="/tasks" className="item">Tasks</Link>
           <Link to="/new_task" className="item">New Task</Link>
           <Link to="/categories" className="item">Categories</Link>
-          <a className="item">New Category</a>
+          <Link to="/new_category" className="item">New Category</Link>
           {this.props.admin ?
             <Link to="/users" className="item">Users</Link>
             :
@@ -85,7 +85,7 @@ class User extends React.Component {
           </div>
         </div>
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
-          <img src={city} width={"800"} height={"200"}/>
+          <img src={city} width={"455"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">{user.username}</h1>
           </div>

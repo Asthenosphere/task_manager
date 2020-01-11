@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import city from "./city.jpeg";
+import city from "./NewYork.png";
 
 class Task extends React.Component {
   constructor(props) {
@@ -97,7 +97,7 @@ class Task extends React.Component {
           </div>
         </div>
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
-          <img src={city} width={"800"} height={"200"}/>
+          <img src={city} width={"427"} height={"200"}/>
           <div className="container py-5">
             <h1 className="display-4">{task.title}</h1>
           </div>
