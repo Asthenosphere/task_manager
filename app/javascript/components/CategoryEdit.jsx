@@ -108,7 +108,7 @@ class CategoryEdit extends React.Component {
         <section className="jumbotron jumbotron-fluid text-center bg-transparent">
           <img src={city} width={"513"} height={"200"}/>
           <div className="container py-5">
-            <h1 className="display-4">Update Task</h1>
+            <h1 className="display-4">Update Category</h1>
             <h4>Update existing category that you've created earlier</h4>
           </div>
         </section>
