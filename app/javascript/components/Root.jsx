@@ -19,7 +19,7 @@ export default class Root extends React.Component {
   }
 
   handleLogoutClick() {
-    axios.delete("https://asthenosphere-todo-list.herokuapp.com/logout", { withCredentials: true })
+    axios.delete("http://localhost:3000/logout", { withCredentials: true })
       .then(response => {
         this.props.handleLogout();
       }).catch(error => {
