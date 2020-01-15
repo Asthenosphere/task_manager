@@ -82,6 +82,9 @@ class Tasks extends React.Component {
         <div className="center">
           <main className="container">
             <div className="center">
+              <Link to="/new_category" className="ui basic violet button">
+                Create New Category
+              </Link>
               <Link to="/new_task" className="ui basic blue button">
                 Create New Task
               </Link>
