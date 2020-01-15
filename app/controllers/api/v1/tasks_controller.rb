@@ -1,6 +1,4 @@
 class Api::V1::TasksController < ApplicationController
-  before_action :require_user
-  before_action :require_same_user, except: [:index, :create]
 
   def index
     task = current_user.tasks.order(created_at: :desc)
